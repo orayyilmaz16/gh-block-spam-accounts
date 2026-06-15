@@ -56,4 +56,4 @@ outputs:
     description: "ISO timestamp for the current GitHub rate limit reset."
 runs:
   using: node20
-  main: ./.github/actions/spam-blocker/index.js
+  main: ./.github/actions/spam-blocker/index.cjs

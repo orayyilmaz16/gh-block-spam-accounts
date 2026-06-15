@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && esbuild src/github-action/index.ts --bundle --platform=node --target=node20 --format=esm --outfile=.github/actions/spam-blocker/index.js",
-    "build:action": "esbuild src/github-action/index.ts --bundle --platform=node --target=node20 --format=esm --outfile=.github/actions/spam-blocker/index.js",
+    "build": "tsc -b && vite build && esbuild src/github-action/index.ts --bundle --platform=node --target=node20 --format=cjs --outfile=.github/actions/spam-blocker/index.cjs",
+    "build:action": "esbuild src/github-action/index.ts --bundle --platform=node --target=node20 --format=cjs --outfile=.github/actions/spam-blocker/index.cjs",
     "format": "biome format . --write",
     "lint": "biome lint .",
     "check": "bunx --bun @biomejs/biome check --write",
