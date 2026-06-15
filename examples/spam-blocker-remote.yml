@@ -60,7 +60,7 @@ jobs:
         with:
           # Use a classic PAT with `user` scope, or a fine-grained PAT with
           # `Block another user: write` if you want real blocking to work.
-          github-token: ${{ secrets.SPAM_BLOCKER_TOKEN }}
+          github-token: ${{ secrets.GH_PATH}}
           detection-sensitivity: ${{ github.event_name == 'workflow_dispatch' && inputs['detection-sensitivity'] || 'balanced' }}
           target-type: ${{ github.event_name == 'workflow_dispatch' && inputs['target-type'] || 'both' }}
           custom-keywords: ${{ github.event_name == 'workflow_dispatch' && inputs['custom-keywords'] || '' }}
