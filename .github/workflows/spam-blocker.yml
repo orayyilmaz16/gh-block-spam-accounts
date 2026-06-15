@@ -1,7 +1,7 @@
-name: Block spam followers
+name: Detect and optionally block GitHub spam accounts
 
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
 
 on:
   workflow_dispatch:
@@ -53,10 +53,8 @@ jobs:
     steps:
       - name: Run spam blocker
         id: spam_blocker
-        uses: dessant/block-spam-users@v3
+        uses: sametcn99/gh-block-spam-accounts@main
         with:
-          block: true
-          report: true
           github-token: ${{ secrets.GH_PATH }}
           detection-sensitivity: ${{ github.event.inputs['detection-sensitivity'] }}
           target-type: ${{ github.event.inputs['target-type'] }}
