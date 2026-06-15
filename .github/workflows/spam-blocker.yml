@@ -55,7 +55,7 @@ jobs:
         id: spam_blocker
         uses: sametcn99/gh-block-spam-accounts@main
         with:
-          github-token: ${{ secrets.GH_PAT }}
+          github-token: ${{ secrets.GH_PATH }}
           detection-sensitivity: ${{ github.event.inputs['detection-sensitivity'] }}
           target-type: ${{ github.event.inputs['target-type'] }}
           custom-keywords: ${{ github.event.inputs['custom-keywords'] }}
