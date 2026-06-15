@@ -1,0 +1,67 @@
+name: Detect and optionally block GitHub spam accounts
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply-blocks:
+        description: "Set to true only after you trust the dry-run output"
+        required: true
+        type: boolean
+        default: false
+      detection-sensitivity:
+        description: "How strict the spam detection should be"
+        required: true
+        type: choice
+        default: balanced
+        options:
+          - aggressive
+          - balanced
+          - conservative
+      target-type:
+        description: "Which relationship graph to scan"
+        required: true
+        type: choice
+        default: both
+        options:
+          - followers
+          - following
+          - both
+      custom-keywords:
+        description: "Optional comma-separated or newline-separated extra keywords"
+        required: false
+        type: string
+      exclude-users:
+        description: "Optional comma-separated or newline-separated GitHub logins to skip"
+        required: false
+        type: string
+      delay-ms:
+        description: "Delay between block requests in milliseconds"
+        required: true
+        type: string
+        default: "750"
+
+permissions:
+  contents: read
+
+jobs:
+  spam-blocker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run spam blocker
+        id: spam_blocker
+        uses: sametcn99/gh-block-spam-accounts@main
+        with:
+          github-token: ${{ secrets.GH_PATH }}
+          detection-sensitivity: ${{ github.event.inputs['detection-sensitivity'] }}
+          target-type: ${{ github.event.inputs['target-type'] }}
+          custom-keywords: ${{ github.event.inputs['custom-keywords'] }}
+          exclude-users: ${{ github.event.inputs['exclude-users'] }}
+          apply-blocks: ${{ github.event.inputs['apply-blocks'] }}
+          delay-ms: ${{ github.event.inputs['delay-ms'] }}
+
+      - name: Print action outputs
+        run: |
+          echo "Authenticated login: ${{ steps.spam_blocker.outputs.authenticated-login }}"
+          echo "Detected count: ${{ steps.spam_blocker.outputs.detected-count }}"
+          echo "Blocked count: ${{ steps.spam_blocker.outputs.blocked-count }}"
